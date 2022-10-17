@@ -8,10 +8,10 @@ export default {
         const invalidError = new Error("로그인이 필요한 기능입니다.");
     
         try {
-            const { authorization, refreshToken } = req.headers;
-            if (authorization === undefined || typeof refreshToken !== "string") throw invalidError;
+            const { Authorization, refreshToken } = req.headers;
+            if (Authorization === undefined || typeof refreshToken !== "string") throw invalidError;
     
-            const [tokenType, accessToken] = authorization.split(" ");
+            const [tokenType, accessToken] = Authorization.split(" ");
             if (tokenType !== "Bearer") throw invalidError;
         
             const payload = jwt.verify(accessToken);
@@ -36,45 +36,54 @@ export default {
             }
             
         } catch (error: any) {
-            res.status(401).json({
+            res.statusCode = 401;
+            res.json({
                 message: error.message
             });
         }
     },
     
     tokenChecker: (req: Request, res: Response, next: NextFunction) => {
-        const { authorization, refreshtoken } = req.headers;
+        try {
+            const { Authorization, refreshToken } = req.headers;
+            
+            if (Authorization && refreshToken) {
+                const error = new Error("이미 로그인이 되어있습니다.");
+                return res.status(400).json({
+                    message: error.message
+                });
+            }
         
-        if (authorization && refreshtoken) {
-            const error = new Error("이미 로그인이 되어있습니다.");
-            return res.status(400).json({
+            return next();
+            
+        } catch (error: any) {
+            res.statusCode = 400;
+            res.json({
                 message: error.message
             });
         }
-    
-        return next();
     },    
 
-    tempAuth: (req: Request, res: Response, next: NextFunction) => {
-        const key = req.query.id;
-        switch (Number(key)) {
-            case 1:
-                req.app.locals.user = { userId: 1, nickname: "BOSS" };
-                break;
-            case 2:
-                req.app.locals.user = { userId: 2, nickname: "root" };
-                break;
-            case 3:
-                req.app.locals.user = { userId: 3, nickname: "mysql" };
-                break;
-            case 4:
-                req.app.locals.user = { userId: 4, nickname: "test" };
-                break;
-            case 5:
-                req.app.locals.user = { userId: 5, nickname: "sparta" };
-                break;
-        }
+    // tempAuth: (req: Request, res: Response, next: NextFunction) => {
+    //     const key = req.query.id;
+    //     switch (Number(key)) {
+    //         case 1:
+    //             req.app.locals.user = { userId: 1, nickname: "BOSS" };
+    //             break;
+    //         case 2:
+    //             req.app.locals.user = { userId: 2, nickname: "root" };
+    //             break;
+    //         case 3:
+    //             req.app.locals.user = { userId: 3, nickname: "mysql" };
+    //             break;
+    //         case 4:
+    //             req.app.locals.user = { userId: 4, nickname: "test" };
+    //             break;
+    //         case 5:
+    //             req.app.locals.user = { userId: 5, nickname: "sparta" };
+    //             break;
+    //     }
         
-        return next();
-    }
+    //     return next();
+    // }
 }

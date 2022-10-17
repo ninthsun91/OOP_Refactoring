@@ -1,13 +1,15 @@
 {
     "include": ["src"],
+    "exclude": ["*.test.ts"],
     "compilerOptions": {
         "outDir": "build",
         "target": "ES6",
         "module": "CommonJS",
+        "moduleResolution": "node",
         "esModuleInterop": true,
         "allowJs": true,
         "strict": true,
-        "lib": ["ES6"]
+        "lib": ["ES6", "ES2022"]
     },
     "ts-node": {
         "esm": true

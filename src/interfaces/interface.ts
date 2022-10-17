@@ -37,4 +37,12 @@ interface LikeI {
     userId: number;
 }
 
-export { UserI, PayloadI, PostI, CommentI, LikeI };
+interface ConnOptions {
+    DB_NAME: string;
+    DB_USER: string;
+    DB_PASSWORD: string;
+    DB_HOST: string;
+}
+
+
+export { UserI, PayloadI, PostI, CommentI, LikeI, ConnOptions };

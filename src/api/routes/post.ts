@@ -1,12 +1,11 @@
 // @ts-check
 
 import { Router } from "express";
-import PostController from "../controllers/post.mjs";
+import Post from "../controllers/post.mjs";
 import auth from "../../middlewares/auth.js";
 
 
 const router = Router();
-const Post = new PostController();
 
 
 /**

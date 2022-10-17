@@ -1,5 +1,5 @@
 import { DataTypes, Model, InferAttributes, InferCreationAttributes, CreationOptional } from "sequelize";
-import sequelize from "../config/config";
+import sequelize from "../config/connect";
 
 
 class Users extends Model<
@@ -12,7 +12,6 @@ class Users extends Model<
 
     declare createdAt: CreationOptional<Date>;
     declare updatedAt: CreationOptional<Date>;
-
 }
 
 Users.init({

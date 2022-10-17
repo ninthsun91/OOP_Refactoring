@@ -1,5 +1,3 @@
-// @ts-check
-
 /**
  * SEQUELIZE CONNECTION
  */
@@ -12,8 +10,8 @@ const sequelize = new Sequelize(
     env.DB_USER,
     env.DB_PASSWORD,
     {
-        dialect: "mysql",
         host: env.DB_HOST,
+        dialect: "mysql",
         // logging: false,
     }
 );

@@ -2,6 +2,7 @@ import jwt from "jsonwebtoken";
 import env from "../config.env";
 import { PayloadI } from "../interfaces/interface";
 
+
 export default {
     sign: (payload: PayloadI)=>{
         return jwt.sign(payload, env.JWT_KEY, {

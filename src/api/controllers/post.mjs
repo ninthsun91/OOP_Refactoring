@@ -1,10 +1,8 @@
-import PostService from "../../services/post.mjs";
+import Post from "../../services/post.mjs";
 import joi from "../../utils/validator.js";
 
 
-export default class PostController {
-    Post = new PostService();
-
+class PostController {
     createOne = async(req, res, next) => {
         const { title, content } 
             = await joi.postSchema.validateAsync(req.body);
@@ -14,7 +12,7 @@ export default class PostController {
         };
     
         try {
-            await this.Post.createOne(post);
+            await Post.createOne(post);
         
             res.status(200).json({
                 message: "게시글을 작성했습니다."
@@ -31,7 +29,7 @@ export default class PostController {
     findAll = async(req, res, next) => {
         try {
             res.status(200).json({
-                data: await this.Post.findAll()
+                data: await Post.findAll()
             });
             
         } catch (error) {
@@ -47,7 +45,7 @@ export default class PostController {
     
         try {
             const { postId } = req.params;    
-            const data = await this.Post.findOne(postId);
+            const data = await Post.findOne(postId);
         
             res.status(200).json({ data });
             
@@ -69,7 +67,7 @@ export default class PostController {
                 title, content
             };
     
-            const result = await this.Post.updateOne(post);
+            const result = await Post.updateOne(post);
             switch (result[0]) {
                 case null:
                     const authError = new Error("수정 권한이 없습니다");
@@ -99,7 +97,7 @@ export default class PostController {
         const { postId } = req.params;
         
         try {
-            const result = await this.Post.deleteOne({ userId, postId });
+            const result = await Post.deleteOne({ userId, postId });
             switch (result) {
                 case null:
                     const authError = new Error("삭제 권한이 없습니다.");
@@ -130,7 +128,7 @@ export default class PostController {
         const { userId } = req.app.locals.user;
     
         try {
-            const result = await this.Post.toggleLike({ postId, userId });
+            const result = await Post.toggleLike({ postId, userId });
             if (result === "add") {
                 res.status(200).json({
                     message: "게시글의 좋아요를 등록했습니다."
@@ -152,7 +150,9 @@ export default class PostController {
         const { userId } = req.app.locals.user;
     
         res.status(200).json({
-            data: this.Post.likeList(userId)
+            data: Post.likeList(userId)
         });
     }
 }
+
+export default new PostController();

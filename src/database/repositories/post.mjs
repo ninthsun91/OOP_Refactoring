@@ -3,7 +3,7 @@ import Posts from "../models/post.js";
 import Likes from "../models/like.js";
 
 
-export default class PostRepository {
+class PostRepository {
     createOne = async(post) => {
         return await Posts.create(post);
     }
@@ -83,6 +83,9 @@ export default class PostRepository {
         });
     }
 }
+
+
+export default new PostRepository();
 
 
 // import { models } from "../config.mjs";

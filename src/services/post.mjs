@@ -1,15 +1,13 @@
-import PostRepository from "../database/repositories/post.mjs";
+import Post from "../database/repositories/post.mjs";
 
 
-export default class PostService {
-    Post = new PostRepository();
-
+class PostService {
     createOne = async(post) => {
-        return await this.Post.createOne(post);
+        return await Post.createOne(post);
     }
 
     findAll = async() => {
-        const result = await this.Post.findAll();
+        const result = await Post.findAll();
         const postList = result.map((post)=>{
             return {
                 postId: post.postId,
@@ -26,7 +24,7 @@ export default class PostService {
     }
 
     findOne = async(postId) => {
-        const post = await this.Post.findOne(postId);
+        const post = await Post.findOne(postId);
 
         if (post === null) throw new Error("POST NOT FOUND");
 
@@ -42,28 +40,28 @@ export default class PostService {
     }
 
     updateOne = async(post) => {
-        const check = await this.Post.findOne(post.postId);
+        const check = await Post.findOne(post.postId);
 
         if (check === null || (check.get().userId !== post.userId)) return [null];
-        return await this.Post.updateOne(post);
+        return await Post.updateOne(post);
     }
 
     deleteOne = async(ids) => {
-        const check = await this.Post.findOne(ids.postId);
+        const check = await Post.findOne(ids.postId);
         
         if (check === null || (check.get().userId !== ids.userId)) return null;
-        return this.Post.deleteOne(ids);
+        return Post.deleteOne(ids);
     }
     
     toggleLike = async(ids) => {
-        const check = await this.Post.findLike(ids);
+        const check = await Post.findLike(ids);
         
-        if (check === null) return await this.Post.addLike(ids);
-        return await this.Post.deleteLike(ids);
+        if (check === null) return await Post.addLike(ids);
+        return await Post.deleteLike(ids);
     }
 
     likeList = async(userId) => {
-        const result = await this.Post.findLikes(userId);
+        const result = await Post.findLikes(userId);
         const likeList = result.map((like)=>{
             return {
                 postId: like.Post.postId,
@@ -78,3 +76,6 @@ export default class PostService {
         return likeList;
     }
 }
+
+
+export default new PostService();

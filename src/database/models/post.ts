@@ -1,5 +1,5 @@
 import { DataTypes, Model, InferAttributes, InferCreationAttributes, CreationOptional, ForeignKey, NonAttribute } from "sequelize";
-import sequelize from "../config/config";
+import sequelize from "../config/connect";
 import Users from "./user";
 
 
