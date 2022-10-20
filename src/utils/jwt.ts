@@ -1,10 +1,10 @@
 import jwt from "jsonwebtoken";
 import env from "../config.env";
-import { PayloadI } from "../interfaces/interface";
+import { JwtPayload } from "jsonwebtoken";
 
 
 export default {
-    sign: (payload: PayloadI)=>{
+    sign: (payload: JwtPayload)=>{
         return jwt.sign(payload, env.JWT_KEY, {
             algorithm: "HS256",
             expiresIn: 60*10,

@@ -1,4 +1,3 @@
-
 interface UserI {
     userId?: number;
     nickname: string;
@@ -8,6 +7,7 @@ interface UserI {
 }
 
 interface PayloadI {
+    [key: string]: number | string;
     userId: number;
     nickname: string;
 }

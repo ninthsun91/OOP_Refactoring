@@ -1,11 +1,10 @@
-import { Sequelize } from "sequelize";
 import Users from "../models/user";
 import Posts from "../models/post";
 import Comments from "../models/comment";
 import Likes from "../models/like";
 
 
-export default function associateModels(sequelize: Sequelize) {
+export default function associateModels() {
     Users.hasMany(Posts, {
         as: "Posts",
         foreignKey: "userId"

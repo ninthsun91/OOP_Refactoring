@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from "express";
-import { PayloadI } from "../interfaces/interface";
 import jwt from "../utils/jwt";
+import { JwtPayload } from "jsonwebtoken";
 
 
 export default {
@@ -13,15 +13,15 @@ export default {
     
             const [tokenType, accessToken] = Authorization.split(" ");
             if (tokenType !== "Bearer") throw invalidError;
-        
-            const payload = jwt.verify(accessToken);
+            
+            const payload: JwtPayload | string | null = jwt.verify(accessToken)
             if (payload === null) {
                 console.log("INVALID ACCESSTOKEN");
         
                 const refreshCheck = jwt.refreshVerify(refreshToken);
                 if (refreshCheck === null) throw invalidError;
     
-                const payload: PayloadI = (req.session.refreshToken)!;
+                const payload: JwtPayload = (req.session.refreshToken)!;
                 if (payload === undefined) throw invalidError;
     
                 req.app.locals.user = payload;

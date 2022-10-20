@@ -2,9 +2,9 @@ coverage
 node_modules
 .env
 
-*.test.ts
-*.test.js
-*.test.mjs
-*.spec.ts
-*.spec.js
-*.spec.mjs
+# *.test.ts
+# *.test.js
+# *.test.mjs
+# *.spec.ts
+# *.spec.js
+# *.spec.mjs
